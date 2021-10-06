@@ -1,0 +1,25 @@
+.questionContainer {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.matCardQuestion {
+    margin-top: 10px;
+}
+
+textarea {
+    resize: none;
+}
+
+.iconSpaceRight {
+    margin-right: 10px;
+}
+
+.ridContainer {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+}

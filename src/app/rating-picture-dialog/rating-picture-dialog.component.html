@@ -1,0 +1,45 @@
+<div fxLayout="column" fxLayoutAlign="start" fxLayoutGap="15px">
+    
+    <div fxFlex="100" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="5px">
+        <div fxFlex="90"  fxLayoutAlign="start center"><h3><strong>{{this.object.title}}</strong></h3></div>
+        <mat-icon fxFlex="10" fxLayoutAlign="end" mat-dialog-close=false >close</mat-icon>
+    </div>
+
+    <div id="outerContainer" fxLayout="row" fxLayoutAlign="start">
+        
+            <mat-form-field fxFlex="100" appearance="outline">
+                <mat-label>Was passt nicht?</mat-label>
+                <input 
+                type="text" 
+                matInput
+                [formControl]="problemInput"
+                >
+                <mat-hint>z.B.: Bildschirm ist gesprungen</mat-hint>
+                <mat-error *ngIf="problemInput.hasError('required')">
+                    Bitte definiere das Problem genauer!
+                </mat-error>
+            </mat-form-field>
+        
+    </div>
+
+
+    <div fxLayout="row" fxLayoutAlign="center" fxFlex="100">
+
+        <button id="fileUpload" fxLayout="row" fxFlex="100" mat-raised-button color="accent">
+            <input 
+            fxFlex="100"
+            type="file" 
+            accept="image/png, image/jpeg, image/jpg" capture="environment"
+            (change)="handleUpload($event)"
+            >
+        </button>
+    </div>
+
+
+
+    <div id="buttonContainer" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="15px" fxLayoutGap.xs="10px">
+        <button mat-raised-button color="primary" (click)="confirm()">Bestätigen</button>
+        <button mat-stroked-button (click)="cancel()">Abbrechen</button>
+    </div>
+</div>
+

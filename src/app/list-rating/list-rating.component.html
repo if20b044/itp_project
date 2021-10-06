@@ -1,0 +1,27 @@
+<div fxLayout="column"  fxLayoutAlign="start" fxLayoutGap="10px">
+        <mat-card fxShow.gt-sm>
+                <mat-card-content>
+                        <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="15px">
+                                
+                                <div fxFlex="45"><strong>Objektname</strong></div>
+                                <div fxFlex="15" fxLayoutAlign="start"><strong>Fragen</strong></div>
+                                <div fxFlex fxLayoutAlign="end"><strong>Owner</strong></div>
+                                
+                        </div>
+                </mat-card-content>
+        </mat-card>
+
+        <mat-card [routerLink]="['./', this.object.id]" *ngFor="let object of objects; let i = index" >
+                <mat-card-content>
+                        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="15px">
+                        
+                        <div fxFlex="45">{{ object.name }}</div>
+                        <div fxFlex="15" fxLayoutAlign="start">{{ object.numQuestions }}</div>
+                        <div fxFlex fxLayoutAlign="end">{{ object.createdBy }}</div>
+                
+                        </div>
+                </mat-card-content>
+        </mat-card>
+        
+        <back-button></back-button>
+</div>  

@@ -1,0 +1,19 @@
+.mat-cards {
+    margin-top: 5px;
+    height: auto;
+}
+
+.matCardContent {
+    margin-bottom: 5px;
+}
+
+#questionContainer {
+    display: flex;
+    align-items: center;
+}
+
+
+#buttonContainer {
+    vertical-align: middle;
+}
+

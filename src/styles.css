@@ -1,1 +1,38 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+
+
+body {
+   background-color: #dedede;
+   margin: 0;
+   padding: 0;
+}
+
+
+
+mat-icon {
+   vertical-align: middle;
+} 
+
+.icon-display {
+    overflow: auto;
+    transform: scale(1.5);
+ }
+
+ .example-spacer {
+    flex: 1 1 auto;
+  }
+
+.snackbar {
+   color: #000000;
+   border: #4BCA81 1px solid;
+}
+
+.snackbar button {
+   color: #ffffff;
+}
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

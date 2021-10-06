@@ -1,0 +1,21 @@
+<div fxLayout="column" fxLayoutAlign="start" fxLayoutGap="10px">
+    <div fxLayout="row">
+        <p mat-dialog-title fxFlex="75"  fxLayoutAlign="start center">{{ data.name }}</p>
+        <mat-icon mat-dialog-close=false fxFlex="25" fxLayoutAlign="end">close</mat-icon>
+    </div>
+    
+    <div fxFlex="40" fxLayout="row" fxLayoutAlign="start start">
+        
+        <div id="mainQuestion">
+            Bist du sicher, dass du {{ data.name }} löschen möchtest?
+        </div>
+    </div>
+    <div fxFlex="20" fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="15px">
+        <button (click)="delete(data)" mat-raised-button color="primary" mat-dialog-close=true>Löschen</button>
+        <button mat-raised-button mat-dialog-close=false color="warn">Abbrechen</button>
+    </div>
+    
+</div> 
+
+ 
+

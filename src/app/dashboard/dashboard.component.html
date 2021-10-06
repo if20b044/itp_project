@@ -1,0 +1,48 @@
+<div id="dashboardContainer">
+        <div fxLayout="row wrap" fxLayoutAlign="center" fxLayoutGap="15px">
+            <ng-container *ngFor="let menu of menus">
+                
+                <mat-card 
+                *ngIf="!menu.isMail; else mailBlock" 
+                class="menu-item"  
+                routerLink="{{menu.routerLink}}" 
+                fxFlex="0 1 calc(50% - 15px)"
+                fxFlex.lt-md="100%"
+                >
+                
+                        <div class="iconContainer">
+                            <mat-icon class="icon-display">{{ menu.icon }}</mat-icon>
+
+                        </div>
+                        <div class="titleContainer">
+                            <mat-card-title>{{ menu.title }}</mat-card-title>
+                        </div>
+                
+                </mat-card>
+            
+
+                <ng-template #mailBlock>
+                    
+                    <mat-card 
+                    class="menu-item"  
+                    routerLink="{{menu.routerLink}}" 
+                    fxFlex="0 1 calc(50% - 15px)"
+                    fxFlex.lt-md="100%"
+                    >
+                    <a href="mailto:ramiz.ejubovic@austrian.com">
+                            <div class="iconContainer">
+                                <mat-icon class="icon-display">{{ menu.icon }}</mat-icon>
+
+                            </div>
+                            <div class="titleContainer">
+                                <mat-card-title>{{ menu.title }}</mat-card-title>
+                            </div>
+                    </a>
+                    </mat-card>
+                    
+                </ng-template>
+                
+            </ng-container>
+            
+        </div>
+</div>

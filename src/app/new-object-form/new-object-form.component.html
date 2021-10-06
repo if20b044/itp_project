@@ -1,0 +1,161 @@
+<form [formGroup]="testForm">
+        <div fxLayout="column" fxLayoutGap="30px">
+                <mat-card>
+                        <mat-card-content>
+                                <div id="allgemeinContainer"  fxLayout="column" fxLayoutAlign="center">
+                                        <div fxLayout="row"><h3>Allgemeine Informationen</h3></div>
+                                        <div fxLayout="row" fxLayout.lt-sm="column"  fxLayoutAlign="center" fxLayoutGap="15px"  fxLayoutGap.lt-sm>
+                                                <mat-form-field appearance="outline" fxFlex="50">
+                                                        
+                                                        <mat-label>Gib den Objektname ein</mat-label>
+                                                        
+                                                        <input 
+                                                        matInput 
+                                                        placeholder="z. B. Laptop"
+                                                        id="objektname" 
+                                                        name="objektname"
+                                                        [formControl]="objektNameControl" required>
+                                                        <mat-error *ngIf="objektNameControl.hasError('required')">
+                                                                Bitte gib dem Objekt einen Namen.
+                                                        </mat-error>
+                                                </mat-form-field>
+                                                <mat-form-field appearance="outline" fxFlex="50">
+                                                        <mat-label>Bewertungsintervall</mat-label>
+                                                        <mat-icon matSuffix>schedule</mat-icon>
+                                                        
+                                                        <input 
+                                                                matInput 
+                                                                #ratingIntervall 
+                                                                minlength="1" 
+                                                                placeholder="z. B.: 1 = täglich" 
+                                                                required
+                                                                [formControl]="ratingIntervallControl">
+                                                        
+                                                        <mat-error *ngIf="ratingIntervallControl.hasError('min') && !ratingIntervallControl.hasError('required')">Intervall muss größer 0 sein!</mat-error>
+                                                        <mat-error *ngIf="ratingIntervallControl.hasError('required')">
+                                                        Bitte trage ein Intervall ein
+                                                        </mat-error>
+                                                </mat-form-field>
+                                        </div>
+                                        <div fxLayout="row" fxLayoutAlign="center">
+                                                <mat-form-field appearance="outline" fxFlex="100">
+                                                        <mat-label>Beschreibe das Objekt</mat-label>
+                                                        
+                                                        <textarea 
+                                                                matInput 
+                                                                placeholder="z. B. Ein toller Laptop im Hangar 1" 
+                                                                [formControl]="objectDescriptionControl"
+                                                                rows="2">
+                                                        </textarea>
+                                
+                                                </mat-form-field>
+                                        </div>
+                                </div>
+                        </mat-card-content>
+                </mat-card>
+                
+                
+                <mat-card>
+                        <mat-card-content>
+                                <div id="ridContainer" class="infoContainer" fxLayout="column" >
+                                        <div fxLayout="row" ><h3>Rid Nummern</h3></div>
+                                        <div fxLayout="row" >
+                                                <mat-form-field appearance="outline" fxFlex="100">
+                                                        <mat-label>RID-Nummern</mat-label>
+                                                        <mat-icon matSuffix>tag</mat-icon>
+                                                        
+                                                        <input 
+                                                                matInput 
+                                                                placeholder="z. B. OS-1891389" 
+                                                                rows="5"
+                                                                (keyup.enter)="addRid(ridNum)" 
+                                                                #ridNum>
+                                
+                                                </mat-form-field>
+                                        </div>
+                                        <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="15px">
+                                                
+                                                <mat-list fxFlex="100">
+                                                
+                                                        <mat-card class="matCardQuestion" fxLayout="row" fxLayoutGap="5px" *ngFor="let rid of this.ridrid.value; let i = index">
+                                                                <div fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="start" fxFlex="90">
+                                                                        <div><mat-icon fxHide.lt-sm fxFlex="5">tag</mat-icon><span>{{ rid.id || rid }} </span>  </div>      
+                                                                </div> 
+                                                                <div fxFlex="10" fxLayoutAlign="end center" (click)="removeRid(i)"><mat-icon color="primary">close</mat-icon></div>  
+                                                        </mat-card>
+                                                
+                                                        
+                                                </mat-list>
+                                                      
+                                        </div>
+                                        
+                                </div>
+                        </mat-card-content>
+                        
+                </mat-card>
+                
+                <mat-card>
+                        <mat-card-content>
+                                <div id="fragenContainer"  fxLayout="column" fxLayoutAlign="center">
+                                        <div fxLayout="row"><h3>Fragenkatalog</h3></div>
+                                        <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="15px" fxLayout.lt-sm="column" fxLayoutGap.lt-sm>
+                                               
+                                                <mat-form-field appearance="outline" fxFlex="50">
+                                                        <mat-label>Kontaktadresse</mat-label>
+                                                        <mat-icon matSuffix>mail_outline</mat-icon>
+                                                        
+                                                        <input 
+                                                                matInput 
+                                                                placeholder="z. B. Funktioniert der Laptop?" 
+                                                                (keyup.enter)="addQuestion(questionInput, kontaktMail)" #kontaktMail
+                                                                [formControl]="contactValue"
+                                                                required>
+                                                        <mat-error *ngIf="contactArrayControl.hasError('required') && !contactArrayControl.hasError('email') ">
+                                                                Bitte trage einen gültigen Kontakt ein.
+                                                        </mat-error>
+                                
+                                                </mat-form-field>
+                                                <mat-form-field appearance="outline" fxFlex="50">
+                                                        <mat-label>Erstelle eine Frage</mat-label>
+                                                        <mat-icon matSuffix>help_outline</mat-icon>
+                                                        
+                                                        <input 
+                                                                matInput 
+                                                                placeholder="z. B. Funktioniert der Laptop?" 
+                                                                (keyup.enter)="addQuestion(questionInput, kontaktMail)" #questionInput
+                                                                [formControl]="questionValue"
+                                                                required>
+                                
+                                                        <mat-error *ngIf="contactArrayControl.hasError('required')">
+                                                                Bitte trage eine Frage ein
+                                                        </mat-error>
+                                                </mat-form-field>
+                                                
+                                                
+                                        </div>
+                                        <div fxLayout="row" fxLayoutAlign="start">
+                                                <mat-list fxFlex="100">
+                                                
+                                                        <mat-card class="matCardQuestion" fxLayout="row" fxLayoutGap="5px" *ngFor="let element of this.combinedQuestionAndContactArray.value;  let i = index">
+                                                                <div fxLayout="column"  fxLayoutGap="5px" fxLayoutAlign="start" fxFlex="90"> 
+                                                                        <div fxLayout="row" fxLayoutGap="5px" class="questionContainer"><mat-icon>mail_outline</mat-icon><span>{{ element.contact }}</span></div>
+                                                                        <div fxLayout="row" fxLayoutGap="5px" class="questionContainer"><mat-icon>help_outline</mat-icon><span>{{ element.title }}</span></div>   
+                                                                </div>
+                                                                <div fxFlex="10" fxLayoutAlign="end center" (click)="removeQuestion(i)"><mat-icon color="primary">delete</mat-icon></div>
+                                                        </mat-card>
+                                                        
+                                                </mat-list>   
+                                        </div>
+                                </div>
+                        </mat-card-content>
+                </mat-card>
+                
+                <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="15px">
+                        <button *ngIf="isAddMode" type="button" fxFlex="50" routerLink="../"  mat-stroked-button >Zurück</button>
+                        <button *ngIf="isAddMode" type="button" fxFlex="50" (click)="addToDB()"  mat-raised-button color="primary" [disabled]="this.testForm.invalid">Speichern</button>
+                        <button *ngIf="!isAddMode" type="button" fxFlex="50" routerLink="../.."  mat-stroked-button >Zurück</button>
+                        <button *ngIf="!isAddMode" type="button" fxFlex="50" (click)="updateObject()" fxLayoutAlign="center wrap"  mat-raised-button color="primary" [disabled]="!this.testForm.valid">Änderungen speichern</button>
+                </div>
+         
+        </div>
+</form>

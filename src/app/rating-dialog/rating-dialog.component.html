@@ -1,0 +1,38 @@
+<mat-dialog-content fxLayout="column" fxLayoutAlign="start" fxLayoutGap="15px">
+    <span fxLayout="row" fxLayoutALign="center start" mat-dialog-title>Details</span>
+    
+    
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="15px" fxLayout.lt-lg="column" fxLayoutGap.lt-lg fxLayout.xs="column" fxLayoutGap.xs>
+            <span><strong>Objekt:&nbsp;</strong></span>
+            <span>{{ data.objectId }}</span>
+        
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="15px" fxLayout.lt-lg="column" fxLayoutGap.lt-lg fxLayout.xs="column" fxLayoutGap.xs>
+       
+            <span><strong>RID:&nbsp;</strong></span> 
+            <span>{{ data.subobject }}&nbsp;</span>
+        
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="15px" fxLayout.lt-lg="column" fxLayoutGap.lt-lg fxLayout.xs="column" fxLayoutGap.xs>
+        <span><strong>Bewertet am:&nbsp;</strong></span>
+        <span>{{ data.timestamp }}</span>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="start" fxLayoutGap="10px">
+        <span><strong>Fragen:</strong></span>
+        <div fxLayout="row" fxFlex="100" *ngFor="let question of data.questionsForObject">
+            <div fxLayoutAlign="start center" fxFlex="90">{{ question.title }}</div>
+            <div fxFlex="10" fxLayoutAlign="end center" *ngIf="question.rating == 1"><mat-icon fxLayoutAlign="center center" color="accent">done</mat-icon></div>
+            <div fxFlex="10" fxLayoutAlign="end center" *ngIf="question.rating == 0"><mat-icon color="primary">close</mat-icon></div>
+        </div>
+        
+        
+    </div>
+
+    <div id="buttonContainer" fxLayout="row" fxLayoutAlign="center center">
+        <button mat-raised-button color="primary" mat-dialog-close=false fxLayoutAlign="end">Schließen</button>
+    </div>
+
+</mat-dialog-content>
+

@@ -1,0 +1,19 @@
+<div fxLayout="column" fxLayoutAlign="start" fxLayoutGap="10px">
+    <div id="bewertungenTitle" fxLayout="row" fxLayoutAlign="center wrap">
+        <h2>Wähle das Objekt aus!</h2>    
+    </div>
+    <ng-container  *ngFor="let object of this.objects; let i = index;">
+        
+            
+                <mat-card [routerLink]="['./', this.object.sid, this.object.title]">
+                    <mat-card-content>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+                            
+                            <div fxFlex="100"><div fxLayoutAlign="start center">{{ object.title }}</div></div>
+
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+    </ng-container>
+    <back-button></back-button>
+</div> 

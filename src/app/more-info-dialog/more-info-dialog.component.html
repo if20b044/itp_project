@@ -1,0 +1,39 @@
+<div fxLayout="column" fxLayoutAlign="start" fxLayoutGap="15px">
+    
+    <div fxLayout="row">
+        <p mat-dialog-title fxFlex="75"  fxLayoutAlign="start center">{{ data.oname }}</p>
+        <mat-icon mat-dialog-close=false fxFlex="25" fxLayoutAlign="end">close</mat-icon>
+    </div>
+    
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="15px">
+        <div fxFlex="100" fxLayoutAlign="start">
+            <span><strong>ID:&nbsp;</strong>{{ data.oid }}</span>
+        </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="15px">
+        <div fxFlex="100" fxLayoutAlign="start">
+            <span><strong>Intervall:&nbsp;</strong></span> 
+            <span>{{ data.ointerval }}&nbsp;Tage</span>
+        </div>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="15px" fxLayout.xs="column" fxLayoutGap.xs>
+        <span><strong>Beschreibung:&nbsp;</strong></span>
+        <span>{{ data.odescription }}</span>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="15px" fxLayout.xs="column" fxLayoutGap.xs>
+        <span><strong>Erstellt am:&nbsp;</strong></span>
+        <span>{{ data.created }}</span>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="15px" fxLayout.xs="column" fxLayoutGap.xs>  
+        <span><strong>Erstellt von:&nbsp;</strong></span>
+        <span>{{ data.createdBy }}</span>  
+    </div>
+
+    <div id="buttonContainer" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="15px" fxLayoutGap.xs="10px">
+        <button mat-stroked-button mat-dialog-close=false>Abbrechen</button>
+        <button [routerLink]="['/ratings-verwalten', data.oid]" mat-raised-button color="primary" mat-dialog-close=true>Jetzt bewerten</button>
+    </div>
+</div>

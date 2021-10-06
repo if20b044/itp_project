@@ -1,0 +1,25 @@
+<div fxLayout="column"  fxLayoutAlign="start" fxLayoutGap="10px">
+    <newratingbutton></newratingbutton>
+    <mat-card>
+            <mat-card-content>
+                    <div fxLayout="row">
+                            <div fxLayoutAlign="start" fxFlex="35"><strong>Objekt ID</strong></div>
+                            <div fxLayoutAlign="start" fxFlex="35"><strong>Rid ID</strong></div>
+                            <div fxLayoutAlign="end" fxFlex="30"><strong>Datum</strong></div>
+                    </div>
+            </mat-card-content>
+    </mat-card>
+    <mat-card *ngFor="let object of objects; let i = index" (click)="ratingDialog(this.object)">
+            <mat-card-content>
+                    <div fxLayout="row" fxLayoutGap="5px">
+                            
+                            <div class="alignText" fxLayoutAlign="start center" fxFlex="35">{{ object.objectName }}</div>
+                            <div class="alignText" fxLayoutAlign="start center" fxFlex="35">{{ object.subobjectName }}</div>
+                            <div class="alignText" fxLayoutAlign="end center" fxFlex="30">{{ object.timestamp }}</div>
+        
+                    </div>
+            </mat-card-content>
+    </mat-card>
+    <back-button></back-button>
+</div>   
+ 
