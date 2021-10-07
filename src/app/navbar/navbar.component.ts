@@ -12,16 +12,12 @@ export class NavbarComponent implements OnInit {
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-
     this.getName();
-
   }
 
  getName() {
     this.apiService.callApi('/users', 'GET', {}, (res: any) => {
-      console.log(res); 
       this.loginName = res;
-       
     }); 
  }
 

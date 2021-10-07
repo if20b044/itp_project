@@ -1,0 +1,9 @@
+#imageContainer {
+    height: auto;
+    width: auto;
+}
+
+#image {
+    width: 100%;
+    height: auto;
+}

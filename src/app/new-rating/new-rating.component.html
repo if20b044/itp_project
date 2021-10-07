@@ -1,4 +1,4 @@
-<form [formGroup]="ratingForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="ratingForm">
     <div fxLayout="column" fxLayoutAlign="start" fxLayoutGap="15px">
         <mat-card>
             <mat-card-content>
@@ -11,7 +11,7 @@
         </mat-card>
 
         <div fxLayout="row" fxLayoutAlign="end">
-            <button type="submit" mat-raised-button color="primary">Bewertung speichern!</button>
+            <button type="button" (click)="onSubmit()" mat-raised-button color="primary">Bewertung speichern!</button>
         </div>
         
         <div [formArrayName]="'rating'">
@@ -20,6 +20,7 @@
             *ngFor="let object of objects.questions; let i = index;" 
             [style.border]="object.isAnswered == null ? null : object.isAnswered ? 'green 1px solid' : 'red 1px solid' "
             >
+            <div fxLayout="column">
                 <div 
                 fxLayout="row" 
                 fxLayout.lt-sm="column"
@@ -31,15 +32,22 @@
                     fxFlex="50"
                     >
                     <mat-icon *ngIf="object.isAnswered == false" color="primary">close</mat-icon>
-                    <mat-icon *ngIf="object.isAnswered == true" color="accent">done</mat-icon>
+                    <mat-icon *ngIf="object.isAnswered == true" color="warn">done</mat-icon>
                         {{ object.title }}
                         
                     </span>
+                    
                     <span id="buttonContainer" fxFlex="50" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="15px">
-                        <button type="button" mat-raised-button color="primary" (click)="ratingPictureDialog(i, this.object);">Nein</button>
-                        <button type="button" mat-raised-button color="warn" (click)="setRating1(i)">Ja</button>
+                        <div fxFlex="10" *ngIf="this.object.containsImage">
+                            <mat-icon (click)="showPictureDialog(this.object)" color="accent">photo_camera</mat-icon>
+                        </div>
+                        <button type="button" mat-raised-button color="primary" (click)="ratingPictureDialog(i, this.object); $event.preventDefault()">Nein</button>
+                        <button type="button" mat-raised-button color="warn" (click)="setRating1(i); $event.preventDefault()">Ja</button>
                     </span>
+
                 </div>
+                
+            </div>
             </mat-card>
         </div>
             

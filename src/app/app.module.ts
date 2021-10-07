@@ -34,7 +34,8 @@ import { MyratingsComponent } from './myratings/myratings.component';
 import { NewratingbuttonComponent } from './newratingbutton/newratingbutton.component';
 import { RatingDialogComponent } from './rating-dialog/rating-dialog.component';
 import { RatingPictureDialogComponent } from './rating-picture-dialog/rating-picture-dialog.component';
-import { DeleteQuestionComponent } from './delete-question/delete-question.component'; 
+import { DeleteQuestionComponent } from './delete-question/delete-question.component';
+import { ShowPictureDialogComponent } from './show-picture-dialog/show-picture-dialog.component'; 
 
 
 
@@ -58,7 +59,8 @@ import { DeleteQuestionComponent } from './delete-question/delete-question.compo
     NewratingbuttonComponent,
     RatingDialogComponent,
     RatingPictureDialogComponent,
-    DeleteQuestionComponent
+    DeleteQuestionComponent,
+    ShowPictureDialogComponent
   ],
   imports: [
     HttpClientModule,

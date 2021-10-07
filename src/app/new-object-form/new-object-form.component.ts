@@ -97,6 +97,13 @@ export class NewObjectFormComponent implements OnInit {
     this.ridrid.removeAt(index);
   }
 
+  deleteQuestion(object:any) {
+    let body = ''; 
+    this.apiService.callApi('/questions/', 'Delete', body, (res: any) => {
+      return true; 
+    });
+  }
+
   
   // *** Logik hinter den "Fragen" ***
 
@@ -127,9 +134,6 @@ export class NewObjectFormComponent implements OnInit {
   addToDB() {
     let bodyForm = this.parser.parseAddObject(this.testForm.value); 
     bodyForm.id = this.route.snapshot.params['id'];
-    
-
-    console.log("Added to Database, sind alle Fragen gleich?: ", bodyForm); 
     this.apiService.callApi('/objects', 'POST', bodyForm, (res: any) => {
       this.saveRidToDB(res, bodyForm); 
     });
@@ -141,17 +145,10 @@ export class NewObjectFormComponent implements OnInit {
   }
 
   updateObject() {
-    // same as Parse Add Objekt nur dass die RIDNumbers kein String[] sind sondern Objekt[]
     let bodyForm = this.parser.parseAddObject(this.testForm.value); 
-    
-    // Anpassung der Daten an die Datenbank - dürfen keine Strings sein müssen Objekte sein {id: string}
-    /* bodyForm.ridNumbers.forEach((element, index) => {
-      bodyForm.ridNumbers.splice(index, 1, {id: element}); 
-    }) */
-    /* console.log("TESTFORM in updateObject: ", this.testForm.value); 
-    console.log("bodyform in updateObject nach Parsen: ", bodyForm); */ 
     this.apiService.callApi('/objects', 'PUT', bodyForm, (res: any) => {
       this.putRidToDB(res, bodyForm); 
+      this.putQuestionsToDB(res, bodyForm);
     });
 
     setTimeout(() => {
@@ -169,7 +166,6 @@ export class NewObjectFormComponent implements OnInit {
       return true; 
     });
 
-
   } 
 
   putRidToDB(id:string, bodyForm:AddObjectModel) {
@@ -178,12 +174,25 @@ export class NewObjectFormComponent implements OnInit {
       "title": JSON.stringify(bodyForm.ridNumbers)
     }
 
+    console.log(body);
     this.apiService.callApi('/subobjects', 'PUT', body, (res: any) => {
       return true; 
     });
 
+  }
+  
+  putQuestionsToDB(id: string, bodyForm:AddObjectModel) {
+    let body = {
+      "objectid": bodyForm.id, 
+      "questions": bodyForm.questions,
+      "qcontact": bodyForm.contact
+    }
+     
+    this.apiService.callApi('/questions', 'PUT', body, (res: any) => {
+      return true; 
+    });
 
-  } 
+  }
 
   goToMyRatings(bodyForm:AddObjectModel) {
     this.router.navigate(['./objekte-verwalten']).then((navigated:boolean) => {
@@ -201,8 +210,6 @@ export class NewObjectFormComponent implements OnInit {
     
     return true; 
   }
- 
-  
 
   // TestGetter 
   get frageForm() {
@@ -228,6 +235,7 @@ export class NewObjectFormComponent implements OnInit {
       let parsedQuestion = JSON.parse(res.questions); 
       let parsedSubObjects = JSON.parse(res.subobjekte); 
       this.objects = this.parser.parseSingleObjectModel(res); 
+      console.log(res);
 
 
       this.testForm.patchValue({
@@ -247,7 +255,6 @@ export class NewObjectFormComponent implements OnInit {
       });
       
       parsedQuestion.forEach((element:any) => {
-        // console.log(element); 
         this.combinedQuestionAndContactArray.push(new FormControl(element)); 
       });
     }); 
@@ -255,7 +262,7 @@ export class NewObjectFormComponent implements OnInit {
   }
 
   // HIER IST ENDSTATION - Fragen haben keine ID und damit kann ich sie nicht löschen Teresa muss ids erstellen dann können Sie auch gelöscht werden
-  deleteQuestion(index:any) {
+  deleteQuestionDialog(index:any) {
     const dialogRef = this.dialog.open(DeleteQuestionComponent, {
       width: 'auto',
       height: 'auto', 

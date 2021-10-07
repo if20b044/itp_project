@@ -13,6 +13,7 @@ body {
 
 mat-icon {
    vertical-align: middle;
+   cursor: pointer;
 } 
 
 .icon-display {

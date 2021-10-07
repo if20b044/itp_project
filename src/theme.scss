@@ -2,8 +2,8 @@
 @include mat-core(); 
 
 $my-custom-primary: mat-palette($aua-red-palette, 500, 400);
-$my-custom-accent: mat-palette($aua-blue-palette, 50, 100);
-$my-custom-warn: mat-palette($aua-white-palette, 50, 500);
+$my-custom-warn: mat-palette($aua-blue-palette, 50, 100);
+$my-custom-accent: mat-palette($aua-white-palette, 50, 500);
 
 $my-custom-theme: mat-light-theme($my-custom-primary, $my-custom-accent, $my-custom-warn);
 

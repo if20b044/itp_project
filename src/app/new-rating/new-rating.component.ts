@@ -1,3 +1,4 @@
+import { ShowPictureDialogComponent } from './../show-picture-dialog/show-picture-dialog.component';
 import { SnackbarService } from './../_services/snackbar.service';
 import { RatingPictureDialogComponent } from './../rating-picture-dialog/rating-picture-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -20,6 +21,7 @@ export class NewRatingComponent implements OnInit {
   rid: string = ''; 
   sname: string = ''; 
   ratingForm!: FormGroup; 
+  onSubmitValidator: boolean = false; 
 
   constructor(
     private route: ActivatedRoute, 
@@ -36,7 +38,14 @@ export class NewRatingComponent implements OnInit {
   // Objekt['rating'] wird je nach Nein oder Ja Antwort mit 0 und 1 getogglet 
   // Bei onSubmit() wird durchiteriert und die Daten so bearbeitet wie sie die DB haben möchte
   onSubmit() {
-    this.rating.controls.forEach((element, index) => {
+    // Validationcheck ob jede Frage bearbeitet wurde - Buttons haben kein FormControl weil sie dynamisch kreiert werden
+    this.rating.controls.forEach(element => {
+      let iterator = element as FormGroup; 
+      if (!iterator.contains('comment')) this.onSubmitValidator = true; return false; 
+    })
+    this.onSubmitValidator = false; 
+
+    this.rating.controls.forEach((element) => {
       let iterator = element as FormGroup; 
       if (iterator.controls.rating == null || iterator.controls.rating == undefined || iterator.controls.rating.value == '1') { 
         this.submitValueCheck(iterator);
@@ -54,9 +63,10 @@ export class NewRatingComponent implements OnInit {
 
     this.goToMyRatings();
   }
-
+  
   submitValueCheck(object:FormGroup) {
     object.setControl('rating', new FormControl(1));
+    object.setControl('comment', new FormControl(''));
     object.removeControl('comment');
     object.removeControl('attachment');
     object.removeControl('contentType');
@@ -82,7 +92,9 @@ export class NewRatingComponent implements OnInit {
       rating: new FormArray([]) ,
     })
 
+
     this.getObjectList();
+    
   }
 
   // Hier werden die Daten aus dem Backend geholt
@@ -91,26 +103,27 @@ export class NewRatingComponent implements OnInit {
   // Frage 1 muss immer im Array an 0 Stelle stehen
   getObjectList() {
     this.apiService.callApi('/objects/'+this.id, 'GET', {}, (res: any) => {
-      console.log("RESPONSECHECK: ",res);
       this.objects = this.parser.parseSingleObjectModel(res);
-      console.log("CHECKTHISOUT: ",this.objects);
       this.createDynamicallyFormGroups(this.objects);
     }); 
-  }
+  }  
 
   // pusht leere FormGroups ins Array
   createDynamicallyFormGroups(objects:any) {
     objects.questions.forEach((element:any) => {
       element['isAnswered'] = null;
+      element['containsImage'] = null;
+      element['containsContentType'] = null;
       this.rating.push(new FormGroup({}))
     })
-    console.log(objects.questions);
+    
   }
 
-  setRating1(index:any) {
+  setRating1(index:any) { 
     let ratingArrayFormGroup = this.ratingArrayFormGroup(index); 
     ratingArrayFormGroup.setControl('rating', new FormControl(1)); 
-    this.objects.questions[index].isAnswered = true; 
+    this.objects.questions[index].isAnswered = true;
+    
   }
 
   ratingPictureDialog(index: any, object: any) {
@@ -131,6 +144,10 @@ export class NewRatingComponent implements OnInit {
       if(result.status) { 
         this.addControlToArray(result.index, result);
         this.objects.questions[index].isAnswered = false; 
+        if (result.base64 != ''){ 
+          this.objects.questions[index].containsImage = result.base64;
+          this.objects.questions[index].containsContentType = result.fileType;
+        }
       }
     });
   }
@@ -143,6 +160,16 @@ export class NewRatingComponent implements OnInit {
     ratingArrayFormGroup.setControl('attachment', new FormControl(object.base64));
     ratingArrayFormGroup.setControl('contentType', new FormControl(object.fileType));
 
+  }
+
+  showPictureDialog(object:any) {
+    let data: string = 'data:image/' + object.containsContentType + ';base64,' + object.containsImage; 
+    const dialogRef = this.dialog.open(ShowPictureDialogComponent, {
+      height: 'auto', 
+      width: 'auto', 
+      data: data
+    });
+   
   }
 
   get rating() {

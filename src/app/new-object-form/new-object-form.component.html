@@ -70,7 +70,7 @@
                                                                 rows="5"
                                                                 (keyup.enter)="addRid(ridNum)" 
                                                                 #ridNum>
-                                
+                                                        <mat-hint>Nach dem du eine RID Nummer eingetragen hast, drücke "Enter"</mat-hint>
                                                 </mat-form-field>
                                         </div>
                                         <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="15px">
@@ -113,6 +113,7 @@
                                                         <mat-error *ngIf="contactArrayControl.hasError('required') && !contactArrayControl.hasError('email') ">
                                                                 Bitte trage einen gültigen Kontakt ein.
                                                         </mat-error>
+                                                        <mat-hint>Nach dem du beides eingetragen hast drücke "Enter"</mat-hint>
                                 
                                                 </mat-form-field>
                                                 <mat-form-field appearance="outline" fxFlex="50">
@@ -132,7 +133,7 @@
                                                 </mat-form-field>
                                                 
                                                 
-                                        </div>
+                                        </div> 
                                         <div fxLayout="row" fxLayoutAlign="start">
                                                 <mat-list fxFlex="100">
                                                 

@@ -24,10 +24,7 @@ export class ListObjectsComponent implements OnInit {
 
   getObjectList() {
     this.apiService.callApi('/objects', 'GET', {}, (res: any) => {
-      
-      this.objects = res.map((r: any) => this.parser.parseObject(r));
-      console.log("LISTE: ", this.objects)
-       
+      this.objects = res.map((r: any) => this.parser.parseObject(r)); 
     }); 
   }
 

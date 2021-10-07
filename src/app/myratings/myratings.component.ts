@@ -24,9 +24,8 @@ export class MyratingsComponent implements OnInit {
 
   getRatingsList() {
     this.apiService.callApi('/ratings', 'GET', {}, (res: any) => {
-      console.log(res); 
+      console.log("RESPONSE OF MYRATINGS: ", res)
       this.objects = res.map((r: any) => this.parser.parseRatingsModel(r));
-       console.log(this.objects)
     }); 
   }
 
@@ -36,7 +35,7 @@ export class MyratingsComponent implements OnInit {
         height: 'auto',
         width: 'auto',
         data: data
-      }).afterClosed().subscribe(result => {
+      }).afterClosed().subscribe(result => { 
         
       });
      

@@ -22,9 +22,12 @@
     <div fxLayout="column" fxLayoutAlign="start" fxLayoutGap="10px">
         <span><strong>Fragen:</strong></span>
         <div fxLayout="row" fxFlex="100" *ngFor="let question of data.questionsForObject">
-            <div fxLayoutAlign="start center" fxFlex="90">{{ question.title }}</div>
-            <div fxFlex="10" fxLayoutAlign="end center" *ngIf="question.rating == 1"><mat-icon fxLayoutAlign="center center" color="accent">done</mat-icon></div>
-            <div fxFlex="10" fxLayoutAlign="end center" *ngIf="question.rating == 0"><mat-icon color="primary">close</mat-icon></div>
+            <div fxLayoutAlign="start center" fxFlex="80">{{ question.title }}</div>
+            <div fxFlex="20" fxLayoutAlign="end center" *ngIf="question.rating == 1"><mat-icon fxLayoutAlign="center center" color="warn">done</mat-icon></div>
+            <div fxLayout="row" fxFlex="20" fxLayoutAlign="end center" fxLayoutGap="5px" *ngIf="question.rating == 0">
+                <div (click)="showPictureDialog(question)" *ngIf="question.attachment"><mat-icon color="primary">photo_camera</mat-icon></div>
+                <mat-icon color="primary">close</mat-icon>
+            </div>
         </div>
         
         
