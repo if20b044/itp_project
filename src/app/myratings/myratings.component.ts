@@ -24,20 +24,17 @@ export class MyratingsComponent implements OnInit {
 
   getRatingsList() {
     this.apiService.callApi('/ratings', 'GET', {}, (res: any) => {
-      console.log("RESPONSE OF MYRATINGS: ", res)
       this.objects = res.map((r: any) => this.parser.parseRatingsModel(r));
     }); 
   }
 
   ratingDialog(data: RatingsModel) {
-      this.dialog.open(RatingDialogComponent, {
-        disableClose: false,
-        height: 'auto',
-        width: 'auto',
-        data: data
-      }).afterClosed().subscribe(result => { 
-        
-      });
+    this.dialog.open(RatingDialogComponent, {
+      disableClose: false,
+      height: 'auto',
+      width: 'auto',
+      data: data
+    }).afterClosed().subscribe(result => {});
      
   }
 

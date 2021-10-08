@@ -1,0 +1,29 @@
+<form [formGroup]="editForm">
+    
+    <div fxLayout="column" fxLayoutGap="15px">
+        <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="5px">
+            <div fxFlex="85" id="titleContainer"><h3><strong>Informationen bearbeiten</strong></h3></div>
+            <mat-icon fxFlex="10" (click)="cancel()">close</mat-icon>
+        </div>
+        <div fxLayout="row">
+            <mat-form-field fxFlex="100"  appearance="outline">
+                <mat-label>Deine Frage</mat-label>
+                <input  type="text" matInput [formControl]="frage">
+                <mat-hint>Hier kannst du deine Frage ändern</mat-hint>
+                <mat-error *ngIf="frage.hasError('required')">Trage bitte eine Frage ein</mat-error>
+            </mat-form-field>
+        </div> 
+        <div fxLayout="row">
+            <mat-form-field fxFlex="100" appearance="outline">
+                <mat-label>Kontaktadresse</mat-label>
+                <input type="text" matInput [formControl]="mail">
+                <mat-hint>Hier kannst du deine Kontaktadresse ändern</mat-hint>
+                <mat-error *ngIf="mail.hasError('email')">Gib bitte ein korrektes Email-Format ein</mat-error>
+            </mat-form-field>
+        </div> 
+        <div id="buttonContainer" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="15px" fxLayoutGap.xs="10px">
+            <button mat-raised-button color="primary" (click)="confirm()">Änderungen speichern</button>
+            <button mat-stroked-button (click)="cancel()">Abbrechen</button>
+        </div>
+    </div>
+</form>

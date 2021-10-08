@@ -47,6 +47,9 @@
                                                                 [formControl]="objectDescriptionControl"
                                                                 rows="2">
                                                         </textarea>
+                                                        <mat-error *ngIf="objectDescriptionControl.hasError('maxlength')">
+                                                                Bitte verwende eine kürzere Beschreibung. (max. 256 Zeichen)
+                                                        </mat-error>
                                 
                                                 </mat-form-field>
                                         </div>
@@ -58,10 +61,10 @@
                 <mat-card>
                         <mat-card-content>
                                 <div id="ridContainer" class="infoContainer" fxLayout="column" >
-                                        <div fxLayout="row" ><h3>Rid Nummern</h3></div>
+                                        <div fxLayout="row" ><h3>Kennzeichnung</h3></div>
                                         <div fxLayout="row" >
                                                 <mat-form-field appearance="outline" fxFlex="100">
-                                                        <mat-label>RID-Nummern</mat-label>
+                                                        <mat-label>Kennzeichnung</mat-label>
                                                         <mat-icon matSuffix>tag</mat-icon>
                                                         
                                                         <input 
@@ -70,18 +73,34 @@
                                                                 rows="5"
                                                                 (keyup.enter)="addRid(ridNum)" 
                                                                 #ridNum>
-                                                        <mat-hint>Nach dem du eine RID Nummer eingetragen hast, drücke "Enter"</mat-hint>
+                                                        <mat-hint>Nach dem du eine ID eingetragen hast, drücke "Enter"</mat-hint>
                                                 </mat-form-field>
                                         </div>
                                         <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="15px">
                                                 
                                                 <mat-list fxFlex="100">
                                                 
-                                                        <mat-card class="matCardQuestion" fxLayout="row" fxLayoutGap="5px" *ngFor="let rid of this.ridrid.value; let i = index">
-                                                                <div fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="start" fxFlex="90">
-                                                                        <div><mat-icon fxHide.lt-sm fxFlex="5">tag</mat-icon><span>{{ rid.id || rid }} </span>  </div>      
+                                                        <mat-card 
+                                                        class="matCardQuestion" 
+                                                        fxLayout="row" 
+                                                        fxLayoutGap="5px" 
+                                                        *ngFor="let rid of this.ridrid.value; let i = index">
+                                                                <div 
+                                                                fxLayout="column" 
+                                                                fxLayoutGap="5px" 
+                                                                fxLayoutAlign="start" 
+                                                                fxFlex="90">
+                                                                        <div>
+                                                                                <mat-icon fxHide.lt-sm fxFlex="5">tag</mat-icon>
+                                                                                <span>{{ rid.id || rid }} </span> 
+                                                                        </div>      
                                                                 </div> 
-                                                                <div fxFlex="10" fxLayoutAlign="end center" (click)="removeRid(i)"><mat-icon color="primary">close</mat-icon></div>  
+                                                                <div 
+                                                                fxFlex="10" 
+                                                                fxLayoutAlign="end center" 
+                                                                (click)="removeRid(i)">
+                                                                        <mat-icon color="primary">close</mat-icon>
+                                                                </div>  
                                                         </mat-card>
                                                 
                                                         
@@ -96,9 +115,22 @@
                 
                 <mat-card>
                         <mat-card-content>
-                                <div id="fragenContainer"  fxLayout="column" fxLayoutAlign="center">
-                                        <div fxLayout="row"><h3>Fragenkatalog</h3></div>
-                                        <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="15px" fxLayout.lt-sm="column" fxLayoutGap.lt-sm>
+                                <div 
+                                id="fragenContainer"  
+                                fxLayout="column" 
+                                fxLayoutAlign="center">
+
+                                        <div 
+                                        fxLayout="row">
+                                                <h3>Fragenkatalog</h3>
+                                        </div>
+
+                                        <div 
+                                        fxLayout="row" 
+                                        fxLayoutAlign="center" 
+                                        fxLayoutGap="15px" 
+                                        fxLayout.lt-sm="column" 
+                                        fxLayoutGap.lt-sm>
                                                
                                                 <mat-form-field appearance="outline" fxFlex="50">
                                                         <mat-label>Kontaktadresse</mat-label>
@@ -110,10 +142,6 @@
                                                                 (keyup.enter)="addQuestion(questionInput, kontaktMail)" #kontaktMail
                                                                 [formControl]="contactValue"
                                                                 required>
-                                                        <mat-error *ngIf="contactArrayControl.hasError('required') && !contactArrayControl.hasError('email') ">
-                                                                Bitte trage einen gültigen Kontakt ein.
-                                                        </mat-error>
-                                                        <mat-hint>Nach dem du beides eingetragen hast drücke "Enter"</mat-hint>
                                 
                                                 </mat-form-field>
                                                 <mat-form-field appearance="outline" fxFlex="50">
@@ -127,25 +155,60 @@
                                                                 [formControl]="questionValue"
                                                                 required>
                                 
-                                                        <mat-error *ngIf="contactArrayControl.hasError('required')">
+                                                        <mat-error 
+                                                        *ngIf="questionValue.hasError('required')">
                                                                 Bitte trage eine Frage ein
                                                         </mat-error>
+                                                        <mat-hint>Trage eine Frage ein und drücke "Enter"</mat-hint>
                                                 </mat-form-field>
                                                 
                                                 
                                         </div> 
-                                        <div fxLayout="row" fxLayoutAlign="start">
-                                                <mat-list fxFlex="100">
+                                        <div fxLayout="row" fxLayoutAlign="start" >
                                                 
-                                                        <mat-card class="matCardQuestion" fxLayout="row" fxLayoutGap="5px" *ngFor="let element of this.combinedQuestionAndContactArray.value;  let i = index">
-                                                                <div fxLayout="column"  fxLayoutGap="5px" fxLayoutAlign="start" fxFlex="90"> 
-                                                                        <div fxLayout="row" fxLayoutGap="5px" class="questionContainer"><mat-icon>mail_outline</mat-icon><span>{{ element.contact }}</span></div>
-                                                                        <div fxLayout="row" fxLayoutGap="5px" class="questionContainer"><mat-icon>help_outline</mat-icon><span>{{ element.title }}</span></div>   
+                                                <div 
+                                                cdkDropList
+                                                (cdkDropListDropped)="drop($event)"
+                                                fxFlex="100">
+                                                        <mat-card 
+                                                        *ngFor="let element of this.combinedQuestionAndContactArray.value;  let i = index"
+                                                        cdkDrag 
+                                                        class="matCardQuestion" 
+                                                        fxLayout="row" fxLayoutGap="5px">
+                                                                <div 
+                                                                fxLayout="column"  
+                                                                fxLayoutGap="5px" 
+                                                                fxLayoutAlign="start" 
+                                                                fxFlex="90"> 
+                                                                        <div 
+                                                                        fxLayout="row" 
+                                                                        fxLayoutGap="5px" 
+                                                                        class="questionContainer">
+                                                                        <mat-icon>mail_outline</mat-icon><span>{{ element.contact }}</span>
                                                                 </div>
-                                                                <div fxFlex="10" fxLayoutAlign="end center" (click)="removeQuestion(i)"><mat-icon color="primary">delete</mat-icon></div>
+                                                                        <div 
+                                                                        fxLayout="row" 
+                                                                        fxLayoutGap="5px" 
+                                                                        class="questionContainer">
+                                                                        <mat-icon>help_outline</mat-icon><span>{{ element.title }}</span>
+                                                                        </div>   
+                                                                </div>
+                                                                <div 
+                                                                fxLayout="column" 
+                                                                fxFlex="10" 
+                                                                fxLayoutAlign="center center" 
+                                                                fxLayoutGap="15px">
+                                                                        <mat-icon 
+                                                                        color="primary" 
+                                                                        (click)="removeQuestion(i)">delete</mat-icon>
+                                                                        <mat-icon 
+                                                                        color="warn" 
+                                                                        (click)="editQuestionAndContactInDialog(i)">
+                                                                        edit
+                                                                        </mat-icon>
+                                                                </div>
                                                         </mat-card>
-                                                        
-                                                </mat-list>   
+                                                </div>
                                         </div>
                                 </div>
                         </mat-card-content>

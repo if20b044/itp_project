@@ -1,3 +1,4 @@
+import { EditContactAndQuestionDialogComponent } from './../edit-contact-and-question-dialog/edit-contact-and-question-dialog.component';
 import { EditSubObjectModel } from './../_models/editSubobjectModel';
 import { DeleteQuestionComponent } from './../delete-question/delete-question.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,7 +12,7 @@ import { FormGroup, FormControl, FormArray, Validators } from "@angular/forms";
 import { ApiService } from '../_api/api.service';
 import { ParserService } from '../parser.service';
 import {Router} from '@angular/router';
-import { AutofillMonitor } from '@angular/cdk/text-field';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { SnackbarService } from '../_services/snackbar.service';
 
 
@@ -38,7 +39,6 @@ export class NewObjectFormComponent implements OnInit {
       this.allInformations = new EditObjectModel; 
       this.objects = new SingleObjectModel(); 
       this.subObjects = new SubObjectModel(); 
-
       
     }
 
@@ -47,10 +47,10 @@ export class NewObjectFormComponent implements OnInit {
   objectDescriptionControl = new FormControl('', Validators.maxLength(256)); 
   
   questionValue = new FormControl('', Validators.required);
-  contactValue = new FormControl('', Validators.required);
+  contactValue = new FormControl('');
   
   contactArrayControl = new FormArray([]); 
-  frageArrayControl = new FormArray([], Validators.required);
+  frageArrayControl = new FormArray([]);
   combinedQuestionAndContactArray = new FormArray([]);
 
   testForm = new FormGroup({
@@ -109,12 +109,12 @@ export class NewObjectFormComponent implements OnInit {
 
   // Hinzufügen der erstellten Fragen  
   addQuestion(question: HTMLInputElement, mail: HTMLInputElement) {
-    if (this.contactValue.invalid || this.questionValue.invalid || question.value == '' || mail.value == '') return;
+    if (this.questionValue.invalid || question.value == '' ) return;
 
     // this.frageArrayControl.push(this.questionValue);
     this.frageArrayControl.push(new FormControl(question.value));
-
     this.contactArrayControl.push(new FormControl(mail.value));
+
     // Benötigt für die ngFor Schleife im HTML sonst doppelte For Schleife funktioniert nicht
     this.combinedQuestionAndContactArray.push(new FormControl({'title': this.questionValue.value, 'contact': this.contactValue.value}));
   
@@ -126,6 +126,32 @@ export class NewObjectFormComponent implements OnInit {
   removeQuestion(index: number) {
     this.frageForm.removeAt(index); 
     this.combinedQuestionAndContactArray.removeAt(index); 
+  }
+
+  editQuestionAndContactInDialog(index:any) {
+    let data = {
+      question: this.frageForm.controls[index].value,
+      contact: this.contacts.controls[index].value
+    }; 
+
+    const dialogRef = this.dialog.open(EditContactAndQuestionDialogComponent, {
+      width: '400px', 
+      height: 'auto', 
+      data: data,
+      disableClose: true,
+      autoFocus:false
+    }); 
+
+    dialogRef.afterClosed().subscribe((result:any) => {
+      if(result.status) this.editQuestion(result.question, result.contact, index); 
+    });
+
+  }
+
+  editQuestion(question:any, mail:any, index:any) {
+    this.frageArrayControl.controls[index].patchValue(question); 
+    this.contactArrayControl.controls[index].patchValue(mail);
+    this.combinedQuestionAndContactArray.controls[index].patchValue({'title': question, 'contact': mail});
   }
 
   // Nach Submit (Neues oder Editiertes Objekt wird erstellt) 
@@ -151,9 +177,7 @@ export class NewObjectFormComponent implements OnInit {
       this.putQuestionsToDB(res, bodyForm);
     });
 
-    setTimeout(() => {
-      this.router.navigate(['./objekte-verwalten']);
-    }, 1000);
+    this.goToMyRatingsAfterUpdate(bodyForm);
   }
 
   saveRidToDB(id:string, bodyForm:AddObjectModel) {
@@ -174,7 +198,6 @@ export class NewObjectFormComponent implements OnInit {
       "title": JSON.stringify(bodyForm.ridNumbers)
     }
 
-    console.log(body);
     this.apiService.callApi('/subobjects', 'PUT', body, (res: any) => {
       return true; 
     });
@@ -202,6 +225,14 @@ export class NewObjectFormComponent implements OnInit {
     })
   }
 
+  goToMyRatingsAfterUpdate(bodyForm:AddObjectModel) {
+    this.router.navigate(['./objekte-verwalten']).then((navigated:boolean) => {
+      if (navigated) {
+        this.snackbar.objectUpdating(bodyForm.name); 
+      } 
+    })
+  }
+
   clearForm() {
     this.testForm.reset();
     this.combinedQuestionAndContactArray.clear();
@@ -210,6 +241,14 @@ export class NewObjectFormComponent implements OnInit {
     
     return true; 
   }
+
+  drop(event: CdkDragDrop<string[]>) {
+      moveItemInArray(this.combinedQuestionAndContactArray.value, event.previousIndex, event.currentIndex);
+      moveItemInArray(this.frageForm.value, event.previousIndex, event.currentIndex);
+      moveItemInArray(this.contacts.value, event.previousIndex, event.currentIndex);
+   }
+
+ 
 
   // TestGetter 
   get frageForm() {
@@ -235,8 +274,6 @@ export class NewObjectFormComponent implements OnInit {
       let parsedQuestion = JSON.parse(res.questions); 
       let parsedSubObjects = JSON.parse(res.subobjekte); 
       this.objects = this.parser.parseSingleObjectModel(res); 
-      console.log(res);
-
 
       this.testForm.patchValue({
         objectName:this.objects.objectName,

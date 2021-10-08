@@ -20,7 +20,7 @@ export class RatingPictureDialogComponent implements OnInit {
   problemInput = new FormControl('', Validators.required); 
 
   constructor(
-    private dialogRef: MatDialogRef<RatingPictureDialogComponent>,
+    private dialogRef: MatDialogRef<RatingPictureDialogComponent>, 
     @Inject(MAT_DIALOG_DATA) public data: any)
    
   { 

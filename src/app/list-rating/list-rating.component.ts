@@ -16,7 +16,6 @@ export class ListRatingComponent implements OnInit {
   objects:ObjectModel[] = [] // Alle GET Daten aus der Datenbank werden hier gespeichert. 
 
   constructor(
-    private service: ObjectsService, 
     private dialog: MatDialog, 
     private apiService: ApiService,
     private parser: ParserService
@@ -26,7 +25,6 @@ export class ListRatingComponent implements OnInit {
       this.apiService.callApi('/objects', 'GET', {}, (res: any) => {
         
         this.objects = res.map((r: any) => this.parser.parseObject(r))
-        console.log(this.objects);
          
       }); 
     }
