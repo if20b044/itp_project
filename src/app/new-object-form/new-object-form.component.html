@@ -4,7 +4,12 @@
                         <mat-card-content>
                                 <div id="allgemeinContainer"  fxLayout="column" fxLayoutAlign="center">
                                         <div fxLayout="row"><h3>Allgemeine Informationen</h3></div>
-                                        <div fxLayout="row" fxLayout.lt-sm="column"  fxLayoutAlign="center" fxLayoutGap="15px"  fxLayoutGap.lt-sm>
+                                        <div 
+                                        fxLayout="row" 
+                                        fxLayout.lt-sm="column"  
+                                        fxLayoutAlign="center" 
+                                        fxLayoutGap="15px"  
+                                        fxLayoutGap.lt-sm>
                                                 <mat-form-field appearance="outline" fxFlex="50">
                                                         
                                                         <mat-label>Gib den Objektname ein</mat-label>
@@ -80,28 +85,35 @@
                                                 
                                                 <mat-list fxFlex="100">
                                                 
-                                                        <mat-card 
-                                                        class="matCardQuestion" 
-                                                        fxLayout="row" 
-                                                        fxLayoutGap="5px" 
-                                                        *ngFor="let rid of this.ridrid.value; let i = index">
-                                                                <div 
-                                                                fxLayout="column" 
+                                                        <ng-container *ngFor="let rid of this.ridrid.value; let i = index">
+                                                                <mat-card 
+                                                                
+                                                                class="matCardQuestion" 
+                                                                fxLayout="row" 
                                                                 fxLayoutGap="5px" 
-                                                                fxLayoutAlign="start" 
-                                                                fxFlex="90">
-                                                                        <div>
-                                                                                <mat-icon fxHide.lt-sm fxFlex="5">tag</mat-icon>
-                                                                                <span>{{ rid.id || rid }} </span> 
-                                                                        </div>      
-                                                                </div> 
-                                                                <div 
-                                                                fxFlex="10" 
-                                                                fxLayoutAlign="end center" 
-                                                                (click)="removeRid(i)">
-                                                                        <mat-icon color="primary">close</mat-icon>
-                                                                </div>  
-                                                        </mat-card>
+                                                                *ngIf="rid != 'Default'">
+                                                                
+
+                                                                
+                                                                        <div 
+                                                                        fxLayout="column" 
+                                                                        fxLayoutGap="5px" 
+                                                                        fxLayoutAlign="start" 
+                                                                        fxFlex="90">
+                                                                                <div fxLayoutAlign="start center" >
+                                                                                        <mat-icon fxHide.lt-sm fxFlex="5">tag</mat-icon>
+                                                                                        <span>{{ rid.id || rid }} </span> 
+                                                                                </div>      
+                                                                        </div> 
+                                                                        <div 
+                                                                        *ngIf="rid != 'Default'"
+                                                                        fxFlex="10" 
+                                                                        fxLayoutAlign="end center" 
+                                                                        (click)="removeRid(i)">
+                                                                                <mat-icon color="primary">close</mat-icon>
+                                                                        </div>  
+                                                                </mat-card>
+                                                        </ng-container>
                                                 
                                                         
                                                 </mat-list>
@@ -172,31 +184,39 @@
                                                 fxFlex="100">
                                                         <mat-card 
                                                         *ngFor="let element of this.combinedQuestionAndContactArray.value;  let i = index"
+                                                        
                                                         cdkDrag 
                                                         class="matCardQuestion" 
-                                                        fxLayout="row" fxLayoutGap="5px">
+                                                        fxLayout="row" 
+                                                       >
+                                                        <div 
+                                                        fxLayout="column"
+                                                        fxLayoutAlign="center start">
+                                                                <mat-icon cdkDragHandle>more_vert</mat-icon>
+                                                        </div>
                                                                 <div 
-                                                                fxLayout="column"  
-                                                                fxLayoutGap="5px" 
+                                                                fxLayout="column"   
+                                                                 
                                                                 fxLayoutAlign="start" 
-                                                                fxFlex="90"> 
+                                                                fxFlex="85"> 
+                
                                                                         <div 
                                                                         fxLayout="row" 
                                                                         fxLayoutGap="5px" 
                                                                         class="questionContainer">
-                                                                        <mat-icon>mail_outline</mat-icon><span>{{ element.contact }}</span>
-                                                                </div>
+                                                                        <mat-icon fxHide.lt-sm>mail_outline</mat-icon><span>{{ element.contact }}</span>
+                                                                        </div>
                                                                         <div 
                                                                         fxLayout="row" 
                                                                         fxLayoutGap="5px" 
                                                                         class="questionContainer">
-                                                                        <mat-icon>help_outline</mat-icon><span>{{ element.title }}</span>
+                                                                        <mat-icon fxHide.lt-sm>help_outline</mat-icon><span>{{ element.title }}</span>
                                                                         </div>   
                                                                 </div>
                                                                 <div 
                                                                 fxLayout="column" 
                                                                 fxFlex="10" 
-                                                                fxLayoutAlign="center center" 
+                                                                fxLayoutAlign="center end" 
                                                                 fxLayoutGap="15px">
                                                                         <mat-icon 
                                                                         color="primary" 
@@ -215,9 +235,9 @@
                 </mat-card>
                 
                 <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="15px">
-                        <button *ngIf="isAddMode" type="button" fxFlex="50" routerLink="../"  mat-stroked-button >Zurück</button>
+                        <button *ngIf="isAddMode" type="button" fxFlex="50" routerLink="../"  mat-raised-button>Zurück</button>
                         <button *ngIf="isAddMode" type="button" fxFlex="50" (click)="addToDB()"  mat-raised-button color="primary" [disabled]="this.testForm.invalid">Speichern</button>
-                        <button *ngIf="!isAddMode" type="button" fxFlex="50" routerLink="../.."  mat-stroked-button >Zurück</button>
+                        <button *ngIf="!isAddMode" type="button" fxFlex="50" routerLink="../.."  mat-raised-button>Zurück</button>
                         <button *ngIf="!isAddMode" type="button" fxFlex="50" (click)="updateObject()" fxLayoutAlign="center wrap"  mat-raised-button color="primary" [disabled]="!this.testForm.valid">Änderungen speichern</button>
                 </div>
          

@@ -23,7 +23,7 @@ export class ListRatingComponent implements OnInit {
 
     getObjectList() {
       this.apiService.callApi('/objects', 'GET', {}, (res: any) => {
-        
+        console.log(res);
         this.objects = res.map((r: any) => this.parser.parseObject(r))
          
       }); 

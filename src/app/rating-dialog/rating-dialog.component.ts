@@ -12,7 +12,7 @@ export class RatingDialogComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialog: MatDialog
-  ) { console.log("DATA IN DIALOG: ", data) }
+  ) { console.log(data)}
   
   showPictureDialog(object:any) {
     console.log("ZWEITES DIALOG: ", object);

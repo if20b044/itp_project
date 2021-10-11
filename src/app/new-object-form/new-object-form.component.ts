@@ -129,10 +129,14 @@ export class NewObjectFormComponent implements OnInit {
   }
 
   editQuestionAndContactInDialog(index:any) {
-    let data = {
+    /*let data = {
       question: this.frageForm.controls[index].value,
       contact: this.contacts.controls[index].value
-    }; 
+    }; */
+    let data = {
+      question: this.frageForm.value[index],
+      contact: this.contacts.value[index]
+    };
 
     const dialogRef = this.dialog.open(EditContactAndQuestionDialogComponent, {
       width: '400px', 
@@ -149,9 +153,9 @@ export class NewObjectFormComponent implements OnInit {
   }
 
   editQuestion(question:any, mail:any, index:any) {
-    this.frageArrayControl.controls[index].patchValue(question); 
-    this.contactArrayControl.controls[index].patchValue(mail);
-    this.combinedQuestionAndContactArray.controls[index].patchValue({'title': question, 'contact': mail});
+    this.frageArrayControl.value[index] = question;
+    this.contactArrayControl.value[index] = mail;
+    this.combinedQuestionAndContactArray.value[index] = {'title': question, 'contact': mail};
   }
 
   // Nach Submit (Neues oder Editiertes Objekt wird erstellt) 
@@ -159,6 +163,7 @@ export class NewObjectFormComponent implements OnInit {
   // -> Clearing des Formularfeldes
   addToDB() {
     let bodyForm = this.parser.parseAddObject(this.testForm.value); 
+    (bodyForm.ridNumbers.length == 0) ? bodyForm.ridNumbers.push("Default") : ""; 
     bodyForm.id = this.route.snapshot.params['id'];
     this.apiService.callApi('/objects', 'POST', bodyForm, (res: any) => {
       this.saveRidToDB(res, bodyForm); 
@@ -172,6 +177,7 @@ export class NewObjectFormComponent implements OnInit {
 
   updateObject() {
     let bodyForm = this.parser.parseAddObject(this.testForm.value); 
+    (bodyForm.ridNumbers.length == 0) ? bodyForm.ridNumbers.push("Default") : ""; 
     this.apiService.callApi('/objects', 'PUT', bodyForm, (res: any) => {
       this.putRidToDB(res, bodyForm); 
       this.putQuestionsToDB(res, bodyForm);
@@ -248,6 +254,9 @@ export class NewObjectFormComponent implements OnInit {
       moveItemInArray(this.contacts.value, event.previousIndex, event.currentIndex);
    }
 
+   log() {
+     console.log(this.combinedQuestionAndContactArray.value);
+   }
  
 
   // TestGetter 

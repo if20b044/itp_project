@@ -31,8 +31,7 @@ export class ListRatingObjectComponent implements OnInit {
     })
 
     this.apiService.callApi('/subobjects/'+this.id, 'GET', {}, (res: any) => {
-      this.objects = res.map((r: any) => this.parser.parseSubObjectModel(r))
-       
+      this.objects = res.map((r: any) => this.parser.parseSubObjectModel(r));
     }); 
   }
 

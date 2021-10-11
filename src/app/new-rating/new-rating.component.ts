@@ -128,7 +128,7 @@ export class NewRatingComponent implements OnInit {
 
   ratingPictureDialog(index: any, object: any) {
     const dialogRef = this.dialog.open(RatingPictureDialogComponent, {
-      disableClose: false,
+      disableClose: true,
       height: 'auto',
       width: 'auto',
       data: {

@@ -4,13 +4,13 @@
     
     <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="15px" fxLayout.lt-lg="column" fxLayoutGap.lt-lg fxLayout.xs="column" fxLayoutGap.xs>
             <span><strong>Objekt:&nbsp;</strong></span>
-            <span>{{ data.objectId }}</span>
+            <span>{{ data.objectName}}</span>
         
     </div>
     <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="15px" fxLayout.lt-lg="column" fxLayoutGap.lt-lg fxLayout.xs="column" fxLayoutGap.xs>
        
             <span><strong>RID:&nbsp;</strong></span> 
-            <span>{{ data.subobject }}&nbsp;</span>
+            <span>{{ data.subobjectName }}&nbsp;</span>
         
     </div>
 
@@ -33,9 +33,10 @@
         
     </div>
 
-    <div id="buttonContainer" fxLayout="row" fxLayoutAlign="center center">
-        <button mat-raised-button color="primary" mat-dialog-close=false fxLayoutAlign="end">Schließen</button>
-    </div>
+    
 
 </mat-dialog-content>
+<mat-dialog-actions id="buttonContainer" fxLayout="row" fxLayoutAlign="center center">
+    <button mat-raised-button color="primary" mat-dialog-close=false fxLayoutAlign="end">Schließen</button>
+</mat-dialog-actions>
 
