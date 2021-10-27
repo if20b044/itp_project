@@ -35,7 +35,7 @@ export class ListRatingComponent implements OnInit {
       this.apiService.callApi('/objects', 'GET', {}, (res: any) => {
         this.objects = res.map((r: any) => this.parser.parseObject(r));
 
-        // Logik um zuerst nach Datum dann nach Name zu sortieren
+        /*// Logik um zuerst nach Datum dann nach Name zu sortieren
         let time = this.objects.sort((val1, val2) => {
           // Wenn am selben Tag bewertet dann nach Namen sortieren ansonsten nach Datum
           if (this.datify(val2.lastrated) == this.datify(val1.lastrated)) {
@@ -43,8 +43,9 @@ export class ListRatingComponent implements OnInit {
           } 
             
           return this.datify(val2.lastrated) - this.datify(val1.lastrated); 
-          }); 
+          }); */ 
 
+          this.objects.sort((a,b) => a.name.localeCompare(b.name));
         
         // Logik für automatisches Weiterleiten nach einem Rating zum nächsten Objekt
         let localStorageId = new Array(); 

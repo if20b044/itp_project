@@ -18,6 +18,9 @@ export class RatingPictureDialogComponent implements OnInit {
   status:boolean = false; 
 
   problemInput = new FormControl('', Validators.required); 
+  kennzeichnung = new FormControl(''); 
+
+  
 
   constructor(
     private dialogRef: MatDialogRef<RatingPictureDialogComponent>, 
@@ -51,7 +54,13 @@ export class RatingPictureDialogComponent implements OnInit {
     // after confirming sending data to component
     if (!this.problemInput.hasError('required')) {
       this.status = true; 
-      this.dialogRef.close({status: this.status, base64: this.base64String, fileType: this.fileType, message:this.problemInput.value, index: this.index});
+      let string1 = new String(this.kennzeichnung.value);  
+      let string2 = new String(this.problemInput.value); 
+      let string3 = string1.concat(string2.toString()); 
+
+      let comment = new FormControl(string3); 
+      console.log(comment.value); 
+      this.dialogRef.close({status: this.status, base64: this.base64String, fileType: this.fileType, message:comment.value, index: this.index});
     } 
     this.status = false; 
   }
@@ -62,7 +71,7 @@ export class RatingPictureDialogComponent implements OnInit {
     this.webcamImage = webcamImage;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {} 
 
 }
  
