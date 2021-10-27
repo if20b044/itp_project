@@ -1,11 +1,11 @@
-import { EditSubObjectModel } from './_models/editSubobjectModel';
-import { RatingsModel } from './_models/ratings-model';
-import { SubObjectModel } from './_models/subobject-model';
-import { EditObjectModel } from './_models/edit-object';
-import { AddObjectModel } from './_models/addObject-model';
+import { EditSubObjectModel } from '../_models/editSubobjectModel';
+import { RatingsModel } from '../_models/ratings-model';
+import { SubObjectModel } from '../_models/subobject-model';
+import { EditObjectModel } from '../_models/edit-object';
+import { AddObjectModel } from '../_models/addObject-model';
 import { Injectable } from '@angular/core';
-import { ObjectModel } from './_models/object-model';
-import { SingleObjectModel } from './_models/single-object-model';
+import { ObjectModel } from '../_models/object-model';
+import { SingleObjectModel } from '../_models/single-object-model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +25,7 @@ export class ParserService {
     o.createdBy = res.createdBy
     o.lastAnswered = new Date(res.lastAnswered) 
     o.lastModified = new Date(res.lastModified)
+    o.lastrated = res.lastrated
 
     return o
   }

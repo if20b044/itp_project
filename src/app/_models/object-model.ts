@@ -6,5 +6,6 @@ export class ObjectModel {
     lastAnswered: Date = new Date()
     lastModified: Date = new Date()
     name: string = ""
+    lastrated: Date = new Date()
 }
  

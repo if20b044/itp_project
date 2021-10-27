@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from '../_api/api.service';
 import { ObjectModel } from '../_models/object-model';
-import { ParserService } from '../parser.service';
+import { ParserService } from '../_services/parser.service';
 
 @Component({
   selector: 'list-objects',
@@ -25,6 +25,7 @@ export class ListObjectsComponent implements OnInit {
   getObjectList() {
     this.apiService.callApi('/objects', 'GET', {}, (res: any) => {
       this.objects = res.map((r: any) => this.parser.parseObject(r)); 
+      this.objects.sort((a,b) => a.name.localeCompare(b.name));
     }); 
   }
 

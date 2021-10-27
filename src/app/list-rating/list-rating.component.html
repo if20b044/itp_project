@@ -11,7 +11,7 @@
                 </mat-card-content>
         </mat-card>
 
-        <mat-card [routerLink]="['./', this.object.id]" *ngFor="let object of objects; let i = index" >
+        <mat-card [style.border] = "datify(object.lastrated) == 0 ? 'green 1px solid' : datify(object.lastrated) >= 7 ? 'red 1px solid' : null" [routerLink]="['./', this.object.id]" *ngFor="let object of objects; let i = index" >
                 <mat-card-content>
                         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="15px">
                         

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../_api/api.service';
 
+
 @Component({
   selector: 'navbar',
   templateUrl: './navbar.component.html',
@@ -9,16 +10,21 @@ import { ApiService } from '../_api/api.service';
 export class NavbarComponent implements OnInit {
   loginName:string = 'GRINGO'; 
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
-    this.getName();
+    this.getName(); 
+    
   }
 
- getName() {
-    this.apiService.callApi('/users', 'GET', {}, (res: any) => {
-      this.loginName = res;
-    }); 
- }
+  getName() {
+    
+    let userLocalStorage = localStorage.getItem('user'); 
+    if (userLocalStorage == null) return false;
+
+    let parsedUser = JSON.parse(userLocalStorage);
+    this.loginName = parsedUser.firstName; 
+    return true; 
+  } 
 
 }

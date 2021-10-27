@@ -1,3 +1,4 @@
+import { AuthService } from './_services/auth.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ApiService } from './_api/api.service';
 import { ObjectsService } from './_services/objects.service';
@@ -14,7 +15,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { LogoutComponent } from './logout/logout.component';
 import { AddNewObjectComponent } from './add-new-object/add-new-object.component';
 import { NewObjectFormComponent } from './new-object-form/new-object-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -22,7 +22,6 @@ import { ListObjectsComponent } from './list-objects/list-objects.component';
 
 // Material Imports
 import { MaterialModule } from './material/material.module';
-import { FooterComponent } from './footer/footer.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 import { ListRatingComponent } from './list-rating/list-rating.component';
@@ -49,7 +48,6 @@ import { EditContactAndQuestionDialogComponent } from './edit-contact-and-questi
     AddNewObjectComponent,
     NewObjectFormComponent,
     ListObjectsComponent,
-    FooterComponent,
     DeleteDialogComponent,
     ListRatingComponent,
     NewRatingComponent,
@@ -75,23 +73,23 @@ import { EditContactAndQuestionDialogComponent } from './edit-contact-and-questi
     RouterModule.forRoot([
       { 
         path: '', 
-        component: DashboardComponent
-      },
-      { 
-        path: 'logout', 
-        component: LogoutComponent
+        component: DashboardComponent,
+        canActivate: [AuthService]
       },
       { 
         path: 'objekte-verwalten/objekt-erstellen', 
-        component: NewObjectFormComponent
+        component: NewObjectFormComponent,
+        canActivate: [AuthService]
       },
       { 
         path: 'objekte-verwalten/objekt-bearbeiten/:id', 
-        component: NewObjectFormComponent
+        component: NewObjectFormComponent,
+        canActivate: [AuthService]
       },
       { 
         path: 'objekte-verwalten', 
-        component: ListObjectsComponent
+        component: ListObjectsComponent,
+        canActivate: [AuthService]
       },
       { 
         path: 'create-new-rating/:oid/:soid/:sname', 
@@ -114,7 +112,7 @@ import { EditContactAndQuestionDialogComponent } from './edit-contact-and-questi
   ],
   providers: [
     ObjectsService,
-    ApiService
+    ApiService,
   ],
   bootstrap: [AppComponent]
 })

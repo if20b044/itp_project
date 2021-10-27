@@ -10,7 +10,7 @@ import { EditObjectModel } from './../_models/edit-object';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators } from "@angular/forms";
 import { ApiService } from '../_api/api.service';
-import { ParserService } from '../parser.service';
+import { ParserService } from '../_services/parser.service';
 import {Router} from '@angular/router';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { SnackbarService } from '../_services/snackbar.service';
@@ -116,7 +116,7 @@ export class NewObjectFormComponent implements OnInit {
     this.contactArrayControl.push(new FormControl(mail.value));
 
     // Benötigt für die ngFor Schleife im HTML sonst doppelte For Schleife funktioniert nicht
-    this.combinedQuestionAndContactArray.push(new FormControl({'title': this.questionValue.value, 'contact': this.contactValue.value}));
+    this.combinedQuestionAndContactArray.push(new FormControl({'title': question.value, 'contact': mail.value}));
   
     question.value = ''; 
     mail.value = ''; 
@@ -143,7 +143,7 @@ export class NewObjectFormComponent implements OnInit {
       height: 'auto', 
       data: data,
       disableClose: true,
-      autoFocus:false
+      autoFocus:false 
     }); 
 
     dialogRef.afterClosed().subscribe((result:any) => {
@@ -255,7 +255,7 @@ export class NewObjectFormComponent implements OnInit {
    }
 
    log() {
-     console.log(this.combinedQuestionAndContactArray.value);
+     //console.log(this.combinedQuestionAndContactArray.value);
    }
  
 

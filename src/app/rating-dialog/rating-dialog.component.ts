@@ -12,10 +12,9 @@ export class RatingDialogComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialog: MatDialog
-  ) { console.log(data)}
+  ) {}
   
   showPictureDialog(object:any) {
-    console.log("ZWEITES DIALOG: ", object);
     let data: string = 'data:image/' + object.contenttype + ';base64,' + object.attachment; 
     const dialogRef = this.dialog.open(ShowPictureDialogComponent, {
       height: 'auto', 

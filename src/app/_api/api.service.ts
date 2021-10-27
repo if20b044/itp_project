@@ -6,13 +6,13 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ApiService {
-  url = 'https://webservice.one-intra.net/goandsee/api'; // 'https://application.one-intra.net/goandseeapi/api';  // 
+  url = 'https://application.one-intra.net/goandseeapi/api';    //  //  'https://localhost:44315/api';    //  'https://webservice.one-intra.net/goandsee/api';  
 
   
   headerDEV = {
     "Authorization": "Basic Z2F0ZTAxXEFQNjI3NzA6akFMwqdwUXgz",
     "Content-Type": "application/json"
-  }
+  } 
 
   headerPROD = {
     "Content-Type": "application/json"
@@ -30,7 +30,7 @@ export class ApiService {
 
 callApi(path:string, method: string, param = {}, onSuccess = this.successFunction, onError = this.errorFunction) {
     this.http.request(method, this.url+path, {
-      headers:  (window.location.hostname == "localhost" ? this.headerDEV : this.headerPROD), //  (window.location.hostname == "localhost" ? this.headerDEV : this.headerPROD)
+    headers: (window.location.hostname == "localhost" ? this.headerDEV : this.headerPROD),
       body: param
     } )
     .subscribe(result => {

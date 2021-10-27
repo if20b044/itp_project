@@ -4,7 +4,7 @@ import { RatingPictureDialogComponent } from './../rating-picture-dialog/rating-
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl, FormArray } from '@angular/forms';
 import { ApiService } from './../_api/api.service';
-import { ParserService } from './../parser.service';
+import { ParserService } from '../_services/parser.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
@@ -47,6 +47,10 @@ export class NewRatingComponent implements OnInit {
 
     this.rating.controls.forEach((element) => {
       let iterator = element as FormGroup; 
+      if (iterator.controls.attachment?.value == "") {
+        iterator.removeControl('attachment'); 
+        iterator.removeControl('contentType');
+      }
       if (iterator.controls.rating == null || iterator.controls.rating == undefined || iterator.controls.rating.value == '1') { 
         this.submitValueCheck(iterator);
       }
@@ -58,10 +62,14 @@ export class NewRatingComponent implements OnInit {
       rating: JSON.stringify(this.ratingForm.get('rating')?.value)
     }
 
+
     this.apiService.callApi('/ratings', 'POST', body, (res: any) => {
     }); 
 
-    this.goToMyRatings();
+    
+   
+
+    this.isNextObjectToRate(); 
   }
   
   submitValueCheck(object:FormGroup) {
@@ -72,12 +80,35 @@ export class NewRatingComponent implements OnInit {
     object.removeControl('contentType');
   }
 
+  // HIER WEITERMACHEN nächstes Objekt in Localstorage abchecken und gegebenenfalls wohin routen 
+  isNextObjectToRate() {
+    let localStorageInformations = localStorage.getItem('Objekte');
+    if (!localStorageInformations) { this.goToMyRatings(); return; }  
+
+    let parsedLocalStorageInformation = JSON.parse(localStorageInformations);
+    let index = parsedLocalStorageInformation.findIndex((x:any) => x.id === this.id); 
+    if (!parsedLocalStorageInformation[index + 1]) { this.goToMyRatings(); return; }  
+
+    this.goToNextObject(parsedLocalStorageInformation[index + 1]); 
+    return true;  
+    
+  }
+
   goToMyRatings() {
     this.router.navigate(['myratings']).then((navigated:boolean) => {
       if (navigated) {
         this.snackbar.ratingSnackbar(this.rid); 
       } 
     })
+  }
+
+  goToNextObject(data:any) {
+    this.router.navigate(['/create-new-rating', data.id]).then((navigated:boolean) => {
+      if(navigated) {
+        this.snackbar.nextObjectBar(data.oname); 
+      }
+    }); 
+    
   }
 
   ngOnInit(): void {
@@ -91,8 +122,6 @@ export class NewRatingComponent implements OnInit {
       subobjectId: new FormControl(this.rid),
       rating: new FormArray([]) ,
     })
-
-
     this.getObjectList();
     
   }

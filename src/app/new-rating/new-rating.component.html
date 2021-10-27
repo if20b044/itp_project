@@ -1,18 +1,23 @@
 <form [formGroup]="ratingForm">
     <div fxLayout="column" fxLayoutAlign="start" fxLayoutGap="15px">
         <mat-card>
-            <mat-card-content>
+            <mat-card-content fxLayout="column" fxLayoutGap="20px">
                 <div fxLayout="row" fxLayoutAlign="start">
                     <span fxLayoutAlign="start stretch" fxFlex="33"><span id="textHeader"><strong>Übersicht:</strong></span></span>
                     <span fxLayoutAlign="center stretch" fxFlex="33"><span id="textHeader"><strong>{{ this.objects.objectName }}</strong></span></span>
                     <span fxLayoutAlign="end" fxFlex="33"><span id="textHeader"><strong>{{ this.sname }}</strong></span></span>
                 </div>
+                
             </mat-card-content> 
         </mat-card>
+        <mat-card>
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <span fxHide.lt-sm fxFlex="33"><strong>Beschreibung:</strong></span>
+                <span fxFlex="66" fxLayoutAlign="end stretch" fxFlex="100"><span><strong>{{ this.objects.objectDescription }}</strong></span></span>
+            </div>
+        </mat-card>
 
-        <div fxLayout="row" fxLayoutAlign="end">
-            <button type="button" (click)="onSubmit()" mat-raised-button color="primary">Bewertung speichern!</button>
-        </div>
+        
         
         <div [formArrayName]="'rating'">
             <mat-card 
@@ -29,7 +34,7 @@
                 [formGroupName]="i">
                     <span 
                     id="questionContainer"
-                    fxFlex="50"
+                    fxFlex="50" 
                     >
                     <mat-icon *ngIf="object.isAnswered == false" color="primary">close</mat-icon>
                     <mat-icon *ngIf="object.isAnswered == true" color="warn">done</mat-icon>
@@ -50,7 +55,11 @@
             </div>
             </mat-card>
         </div>
-            
+
+        <div fxLayout="row" fxLayoutAlign="end">
+            <button type="button" (click)="onSubmit()" mat-raised-button color="primary">Bewertung speichern!</button>
+        </div>
+        
         <back-button></back-button>
     </div>
 </form>  

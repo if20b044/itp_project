@@ -12,6 +12,15 @@ export class SnackbarService {
       
   }
 
+  nextObjectBar(data:any) {
+    this.snackbar.open(data + ` wird jetzt bewertet` , 'Schließen', {
+      data: data, 
+      duration: 6000, 
+      panelClass: ['snackbar']
+
+  });
+  }
+
   ratingSnackbar(data:any) {
 
     this.snackbar.open(data + ` wurde bewertet` , 'Schließen', {

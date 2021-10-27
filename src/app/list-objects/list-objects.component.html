@@ -13,43 +13,43 @@
         <mat-card *ngFor="let object of objects; let i = index" fxLayoutGap="10px">
                 <mat-card-content fxLayout="row" fxLayoutAlign="start center">
                         
-                                <div 
-                                fxFlex="45" 
-                                fxFlex.lt-sm="80">{{ object.name }}</div>
+                        <div 
+                        fxFlex="45" 
+                        fxFlex.lt-sm="80">{{ object.name }}</div>
 
-                                <div 
-                                fxHide.lt-sm 
-                                fxFlex="25" 
-                                fxLayoutAlign="start">
-                                {{ object.numQuestions }}
-                                </div>
+                        <div 
+                        fxHide.lt-sm 
+                        fxFlex="25" 
+                        fxLayoutAlign="start">
+                        {{ object.numQuestions }}
+                        </div>
 
-                                <div 
-                                fxHide.lt-sm 
-                                fxFlex 
-                                fxLayoutAlign="start">
-                                {{ object.createdBy }}
-                                </div>
-                                
-                                <button 
-                                class="editButton"
-                                fxFlex="30px" fxLayoutAlign="end"
-                                fxFlex.lt-sm="10"
-                                mat-icon-button 
-                                [routerLink]="['/objekte-verwalten/objekt-bearbeiten', this.object.id]"
-                                >
-                                <mat-icon color="secondary">more_vert</mat-icon>
-                                </button>
-                                
-                                <button 
-                                fxFlex="30px" fxLayoutAlign="start"
-                                fxFlex.lt-sm="10"
-                                (click)="deleteDialog(object)"
-                                mat-icon-button  
-                                color="primary"
-                                >
-                                <mat-icon>delete</mat-icon>
-                                </button>  
+                        <div 
+                        fxHide.lt-sm 
+                        fxFlex 
+                        fxLayoutAlign="start">
+                        {{ object.createdBy }}
+                        </div>
+                        
+                        <button 
+                        class="editButton"
+                        fxFlex="30px" fxLayoutAlign="end"
+                        fxFlex.lt-sm="10"
+                        mat-icon-button 
+                        [routerLink]="['/objekte-verwalten/objekt-bearbeiten', this.object.id]"
+                        >
+                        <mat-icon color="secondary">more_vert</mat-icon>
+                        </button>
+                        
+                        <button 
+                        fxFlex="30px" fxLayoutAlign="start"
+                        fxFlex.lt-sm="10"
+                        (click)="deleteDialog(object)"
+                        mat-icon-button  
+                        color="primary"
+                        >
+                        <mat-icon>delete</mat-icon>
+                        </button>  
                         
                 </mat-card-content>
         </mat-card>

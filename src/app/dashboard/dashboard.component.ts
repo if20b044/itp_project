@@ -1,4 +1,6 @@
+import { ApiService } from './../_api/api.service';
 import { Component, OnInit } from '@angular/core';
+import { User } from '../_models/user.mode';
 
 
 @Component({
@@ -7,35 +9,34 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
   menus = [
     {
       title: "Manage Objects",
       icon: "mode_edit",
       routerLink: "/objekte-verwalten",
-      isMail: false
+      isMail: false,
     },
     {
       title: "My Ratings",
       icon: "star_outline",
       routerLink: "/myratings",
-      isMail: false
+      isMail: false,
     },
     {
       title: "Feedback",
       icon: "mail_outline",
       routerLink: "/",
-      isMail: true
+      isMail: true,
     },
     {
-      title: "Logout",
-      icon: "power_settings_new",
-      routerLink: "/logout",
-      isMail: false
+      title: "Map",
+      icon: "location_on",
+      routerLink: "/",
+      isMail: false,
     }
   ]
 
-  constructor() { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
   }
