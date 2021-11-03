@@ -9,7 +9,7 @@ import { User } from './_models/user.mode';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'GoAndSee';
+  title = 'Move and Report';
   user: User = new User(); 
   constructor(private apiService: ApiService) {}
 

@@ -74,22 +74,22 @@ import { EditContactAndQuestionDialogComponent } from './edit-contact-and-questi
       { 
         path: '', 
         component: DashboardComponent,
-        canActivate: [AuthService]
+        // canActivate: [AuthService]
       },
       { 
         path: 'objekte-verwalten/objekt-erstellen', 
         component: NewObjectFormComponent,
-        canActivate: [AuthService]
+        // canActivate: [AuthService]
       },
       { 
         path: 'objekte-verwalten/objekt-bearbeiten/:id', 
         component: NewObjectFormComponent,
-        canActivate: [AuthService]
+        // canActivate: [AuthService]
       },
       { 
         path: 'objekte-verwalten', 
         component: ListObjectsComponent,
-        canActivate: [AuthService]
+        // canActivate: [AuthService]
       },
       { 
         path: 'create-new-rating/:oid/:soid/:sname', 

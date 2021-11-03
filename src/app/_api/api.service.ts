@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ApiService {
-  url =  'https://application.one-intra.net/goandseeapi/api';  //  //  'https://localhost:44315/api'; 'https://webservice.one-intra.net/goandsee/api';   //   
+  url =  'https://webservice.one-intra.net/goandsee/api';  // 'https://application.one-intra.net/goandseeapi/api'; //  'https://localhost:44315/api';    //   
 
   
   headerDEV = {
