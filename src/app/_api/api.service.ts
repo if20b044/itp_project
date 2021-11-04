@@ -10,7 +10,7 @@ export class ApiService {
 
   
   headerDEV = {
-    "Authorization": "Basic Z2F0ZTAxXEFQNjI3NzA6akFMwqdwUXgz",
+    // "Authorization": "Basic Z2F0ZTAxXEFQNjI3NzA6akFMwqdwUXgz",
     "Content-Type": "application/json"
   } 
 
